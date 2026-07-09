@@ -255,6 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const submitBtn = authForm.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
             
+            // Save email to localStorage for dashboard
+            const emailInput = document.getElementById('signin-email') || document.getElementById('signup-email');
+            if (emailInput && emailInput.value) {
+                localStorage.setItem('userEmail', emailInput.value);
+            }
+            
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             submitBtn.disabled = true;
             
@@ -320,5 +326,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 dashboardSidebar.classList.remove('active');
             }
         });
+    }
+
+    // Populate dashboard user email if exists
+    const dashboardEmailElem = document.getElementById('dashboard-user-email');
+    if (dashboardEmailElem) {
+        const storedEmail = localStorage.getItem('userEmail');
+        if (storedEmail) {
+            dashboardEmailElem.textContent = storedEmail;
+        }
     }
 });
