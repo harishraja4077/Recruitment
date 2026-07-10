@@ -3413,6 +3413,24 @@ img {
         outline-offset: 2px;
     }
 
+    /* Mobile message/chat panel alignment fix */
+    #section-messages .grid {
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+    }
+
+    #section-messages .dashboard-panel {
+        min-height: auto !important;
+    }
+
+    #section-messages #chat-body {
+        max-height: 60vh;
+        min-height: 250px;
+    }
+
+    #section-messages .dash-list-item {
+        padding: 0.75rem !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -3428,5 +3446,11 @@ img {
     .dashboard-table th, 
     .dashboard-table td {
         padding: 0.75rem 0.5rem !important;
+    }
+    #section-messages .grid {
+        gap: 1rem !important;
+    }
+    #section-messages #chat-body {
+        max-height: 55vh !important;
     }
 }
