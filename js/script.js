@@ -323,16 +323,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
     const dashboardNavToggle = document.querySelector('.dashboard-nav-toggle');
     const dashboardSidebar = document.querySelector('.dashboard-sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
     
-    if (dashboardNavToggle && dashboardSidebar) {
+    if (dashboardNavToggle && dashboardSidebar && dashboardNavToggle.getAttribute('data-dashboard-handler') !== 'true') {
+        dashboardNavToggle.setAttribute('data-dashboard-handler', 'true');
+
+        const setSidebarState = (isOpen) => {
+            dashboardSidebar.classList.toggle('active', isOpen);
+            document.body.classList.toggle('dashboard-sidebar-open', isOpen);
+
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.toggle('active', isOpen);
+                sidebarOverlay.style.display = isOpen ? 'block' : 'none';
+            }
+        };
+
         dashboardNavToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            dashboardSidebar.classList.toggle('active');
+            setSidebarState(!dashboardSidebar.classList.contains('active'));
         });
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => setSidebarState(false));
+        }
         
         document.addEventListener('click', (e) => {
             if (!dashboardSidebar.contains(e.target) && !dashboardNavToggle.contains(e.target)) {
-                dashboardSidebar.classList.remove('active');
+                setSidebarState(false);
             }
         });
     }
